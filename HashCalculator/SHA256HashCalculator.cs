@@ -11,14 +11,4 @@ public class SHA256HashCalculator : IHashCalculator
         var hash = sha256.ComputeHash(stream);
         return BitConverter.ToInt32(hash, 0);
     }
-
-    public async Task<int> CalculateHashAsync(string filePath)
-    {
-        return await Task.Run(() =>
-        {
-            CalculateHash(filePath);
-            Task.Delay(1000);
-            return Thread.CurrentThread.ManagedThreadId;
-        });
-    }
 }

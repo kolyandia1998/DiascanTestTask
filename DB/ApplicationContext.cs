@@ -6,12 +6,12 @@ namespace DiascanTestTask.DB;
 
 public class ApplicationContext : DbContext
 {
-    public DbSet<DataModel> dataModels => Set<DataModel>();
+    public DbSet<DataModel> DataModels => Set<DataModel>();
     public ApplicationContext() => Database.EnsureCreated();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=DB;Username=postgres;Password=mysecretpassword");
+        optionsBuilder.UseNpgsql(System.Configuration.ConfigurationManager.ConnectionStrings["MyDbConnection"].ConnectionString);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

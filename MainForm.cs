@@ -1,5 +1,6 @@
 using DiascanTestTask.DB.Models;
 using DiascanTestTask.HashCalculator;
+using Microsoft.Extensions.Configuration;
 
 namespace DiascanTestTask;
 
@@ -28,9 +29,9 @@ public partial class MainForm : Form
                 using var db = new DB.ApplicationContext();
                 var hash = hashCalculator.CalculateHash(file);
                 var model = new DataModel { Hash = hash, FileName = file };
-                if (db.dataModels.Contains(model))
+                if (db.DataModels.Contains(model))
                     return;
-                db.dataModels.Add(model);
+                db.DataModels.Add(model);
                 db.SaveChanges();
             });
             tasks.Add(task);
