@@ -1,6 +1,5 @@
 using DiascanTestTask.DB.Models;
 using DiascanTestTask.HashCalculator;
-using Microsoft.Extensions.Configuration;
 
 namespace DiascanTestTask;
 
@@ -12,17 +11,18 @@ public partial class MainForm : Form
         InitializeComponent();
     }
 
+    private string[]? _files;
+
     private IHashCalculator hashCalculator;
 
     private async void button1_Click(object sender, EventArgs e)
     {
         List<Task> tasks = new List<Task>();
-        if (string.IsNullOrEmpty(textBox1.Text))
+        if (_files == null)
         {
             return;
         }
-        var files = textBox1.Text.Split('|');
-        foreach (var file in files)
+        foreach (var file in _files)
         {
             var task = Task.Run(() =>
             {
@@ -43,6 +43,7 @@ public partial class MainForm : Form
     {
         if (openFileDialog1.ShowDialog() == DialogResult.OK)
         {
+            _files = openFileDialog1.FileNames;
             textBox1.Text = string.Join('|', openFileDialog1.FileNames);
         }
     }
