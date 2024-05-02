@@ -7,13 +7,13 @@ public partial class MainForm : Form
 {
     public MainForm(IHashCalculator hashCalculator)
     {
-        this.hashCalculator = hashCalculator;
+        this._hashCalculator = hashCalculator;
         InitializeComponent();
     }
 
     private string[]? _files;
 
-    private IHashCalculator hashCalculator;
+    private IHashCalculator _hashCalculator;
 
     private async void button1_Click(object sender, EventArgs e)
     {
@@ -27,7 +27,7 @@ public partial class MainForm : Form
             var task = Task.Run(() =>
             {
                 using var db = new DB.ApplicationContext();
-                var hash = hashCalculator.CalculateHash(file);
+                var hash = _hashCalculator.CalculateHash(file);
                 var model = new DataModel { Hash = hash, FileName = file };
                 if (db.DataModels.Contains(model))
                     return;
